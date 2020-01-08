@@ -148,6 +148,7 @@ export class VisibleRegion {
 export class Position {
     public latitude: number;
     public longitude: number;
+    public distanceTo(position: Position): number;
     public static positionFromLatLng(latitude: number, longitude: number): Position;
     public ios: any; /* CLLocationCoordinate2D */
     public android: any;

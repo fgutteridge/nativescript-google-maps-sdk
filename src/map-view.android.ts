@@ -699,9 +699,7 @@ export class VisibleRegion extends VisibleRegionBase {
 }
 
 export class Position extends PositionBase {
-
     private _android: any;
-
     get android() {
         return this._android;
     }
@@ -722,9 +720,16 @@ export class Position extends PositionBase {
         this._android = new com.google.android.gms.maps.model.LatLng(this.latitude, parseFloat("" + longitude));
     }
 
-    constructor(android?: any) {
-        super();
-        this._android = android || new com.google.android.gms.maps.model.LatLng(0, 0);
+    public distanceTo(position: Position): number {
+        let fromNative: android.location.Location = new android.location.Location('')
+        fromNative.setLatitude(this.latitude)
+        fromNative.setLongitude(this.longitude)
+
+        let toNative: android.location.Location = new android.location.Location('')
+        toNative.setLatitude(position.latitude)
+        toNative.setLongitude(position.longitude)
+
+        return fromNative.distanceTo(toNative)
     }
 
     public static positionFromLatLng(latitude: number, longitude: number): Position {
@@ -732,6 +737,11 @@ export class Position extends PositionBase {
         position.latitude = latitude;
         position.longitude = longitude;
         return position;
+    }
+
+    constructor(android?: any) {
+        super();
+        this._android = android || new com.google.android.gms.maps.model.LatLng(0, 0);
     }
 }
 

@@ -676,7 +676,7 @@ export class Bounds extends BoundsBase {
 }
 
 export class Position extends PositionBase {
-    private _ios: any; /* CLLocationCoordinate2D */
+    private _ios: CLLocationCoordinate2D;
     get ios() {
         return this._ios;
     }
@@ -697,9 +697,8 @@ export class Position extends PositionBase {
         this._ios = CLLocationCoordinate2DMake(this.latitude, longitude);
     }
 
-    constructor(ios?: CLLocationCoordinate2D) {
-        super();
-        this._ios = ios || CLLocationCoordinate2DMake(0, 0);
+    public distanceTo(position: Position): number {
+        return GMSGeometryDistance(this._ios, position._ios)
     }
 
     public static positionFromLatLng(latitude: number, longitude: number): Position {
@@ -707,6 +706,11 @@ export class Position extends PositionBase {
         position.latitude = latitude;
         position.longitude = longitude;
         return position;
+    }
+
+    constructor(ios?: CLLocationCoordinate2D) {
+        super();
+        this._ios = ios || CLLocationCoordinate2DMake(0, 0);
     }
 }
 

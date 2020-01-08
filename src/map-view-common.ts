@@ -431,7 +431,7 @@ export abstract class ProjectionBase implements Projection {
     public android: any;
 }
 
-export abstract class CameraBase implements Camera {
+export class CameraBase implements Camera {
     public latitude: number;
     public longitude: number;
     public zoom: number;
@@ -447,9 +447,10 @@ export class VisibleRegionBase implements VisibleRegion {
     public bounds: Bounds;
 }
 
-export class PositionBase implements Position {
+export abstract class PositionBase implements Position {
     public latitude: number;
     public longitude: number;
+    public abstract distanceTo(position: Position): number;
     public ios: any; /* CLLocationCoordinate2D */
     public android: any;
 }
