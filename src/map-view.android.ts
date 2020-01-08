@@ -5,13 +5,12 @@ import {
     MarkerBase, PolygonBase, PolylineBase, ProjectionBase,
     PositionBase, ShapeBase, latitudeProperty, VisibleRegionBase,
     longitudeProperty, bearingProperty, zoomProperty,
-    tiltProperty, StyleBase, UISettingsBase, getColorHue
+    tiltProperty, StyleBase, UISettingsBase, getColorHue, CameraBase
 } from "./map-view-common";
 import { Image } from "tns-core-modules/ui/image";
 import { Color } from "tns-core-modules/color";
 import { Point } from "tns-core-modules/ui/core/view";
 import imageSource = require("tns-core-modules/image-source");
-import {IndoorLevel} from "./map-view";
 
 export * from "./map-view-common";
 
@@ -409,6 +408,10 @@ export class MapView extends MapViewBase {
         return (this._gMap) ? new Projection(this._gMap.getProjection()) : null;
     }
 
+    get camera(): Camera {
+        return (this._gMap) ? new Camera(this._gMap.getCameraPosition()) : null;
+    }
+
     get settings(): UISettings {
         return (this._gMap) ? new UISettings(this._gMap.getUiSettings()) : null;
     }
@@ -623,6 +626,38 @@ export class Projection extends ProjectionBase {
             x: point.x,
             y: point.y
         };
+    }
+
+    constructor(android: any) {
+        super();
+        this._android = android;
+    }
+}
+
+export class Camera extends CameraBase {
+    private _android: any;
+    get android() {
+        return this._android;
+    }
+
+    get latitude(): number {
+        return this._android.target.latitude;
+    }
+
+    get longitude(): number {
+        return this._android.target.longitude;
+    }
+
+    get zoom(): number {
+        return this._android.zoom;
+    }
+
+    get bearing(): number {
+        return this._android.bearing;
+    }
+
+    get tilt(): number {
+        return this._android.tilt;
     }
 
     constructor(android: any) {

@@ -3,7 +3,7 @@ import {
     MarkerBase, PolygonBase, PolylineBase, ProjectionBase,
     PositionBase, ShapeBase, latitudeProperty, VisibleRegionBase,
     longitudeProperty, bearingProperty, zoomProperty,
-    tiltProperty, StyleBase, UISettingsBase, getColorHue
+    tiltProperty, StyleBase, UISettingsBase, getColorHue, CameraBase
 } from "./map-view-common";
 import { Color } from "tns-core-modules/color";
 import * as imageSource from 'tns-core-modules/image-source';
@@ -365,6 +365,10 @@ export class MapView extends MapViewBase {
         return new Projection(this.nativeView.projection);
     }
 
+    get camera(): Camera {
+        return (this.nativeView) ? new Camera(this.nativeView.camera) : null;
+    }
+
     get settings(): UISettings {
         return (this.nativeView) ? new UISettings(this.nativeView.settings) : null;
     }
@@ -575,6 +579,38 @@ export class Projection extends ProjectionBase {
             x: cgPoint.x,
             y: cgPoint.y
         };
+    }
+
+    constructor(ios: any) {
+        super();
+        this._ios = ios;
+    }
+}
+
+export class Camera extends CameraBase {
+    private _ios: GMSCameraPosition; /* GMSCameraPosition */
+    get ios() {
+        return this._ios;
+    }
+
+    get latitude(): number {
+        return this._ios.target.latitude;
+    }
+
+    get longitude(): number {
+        return this._ios.target.longitude;
+    }
+
+    get zoom(): number {
+        return this._ios.zoom;
+    }
+
+    get bearing(): number {
+        return this._ios.bearing;
+    }
+
+    get tilt(): number {
+        return this._ios.viewingAngle;
     }
 
     constructor(ios: any) {

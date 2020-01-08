@@ -167,6 +167,7 @@ export abstract class MapViewBase extends View implements MapView {
     public _infoWindowTemplates = new Array<KeyedTemplate>();
 
     public projection: Projection;
+    public camera: Camera;
     public settings: UISettingsBase;
     public myLocationEnabled: boolean;
 
@@ -428,6 +429,14 @@ export abstract class ProjectionBase implements Projection {
     public abstract toScreenLocation(position: Position): Point;
     public ios: any; /* GMSProjection */
     public android: any;
+}
+
+export abstract class CameraBase implements Camera {
+    public latitude: number;
+    public longitude: number;
+    public zoom: number;
+    public bearing: number;
+    public tilt: number;
 }
 
 export class VisibleRegionBase implements VisibleRegion {

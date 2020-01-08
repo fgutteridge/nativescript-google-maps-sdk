@@ -67,6 +67,8 @@ export class MapView extends View {
 
     public projection: Projection;
 
+    public camera: Camera;
+
     public myLocationEnabled: boolean;
 
     public setMinZoomMaxZoom(): void;
